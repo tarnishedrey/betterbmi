@@ -28,6 +28,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _weightController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
   double _bmi = 0.0;
   String _bmiCategory = '';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -124,9 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       )
                     : ElevatedButton(
                         onPressed: () async {
-                          // Validate the form
                           if (_formKey.currentState?.validate() ?? false) {
-                            // Set loading state
                             setState(() {
                               widget.isLoading = true;
                             });
@@ -136,11 +135,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             double weight =
                                 double.parse(_weightController.text);
 
-                            // Simulate asynchronous operation (replace with your actual logic)
                             await Future.delayed(Duration(seconds: 2));
 
                             setState(() {
-                              // Different BMI calculation based on gender
                               if (widget._gender == 'Laki-Laki') {
                                 _bmi =
                                     weight / ((height / 100) * (height / 100));
@@ -150,18 +147,16 @@ class _MyHomePageState extends State<MyHomePage> {
                                     1.1;
                               }
 
-                              // Different BMI category determination based on gender
                               if (_bmi < 18.5) {
-                                _bmiCategory = 'Kekurusan';
+                                _bmiCategory = 'Kurus';
                               } else if (_bmi >= 18.5 && _bmi < 24.9) {
                                 _bmiCategory = 'Ideal';
                               } else if (_bmi >= 25.0 && _bmi < 29.9) {
-                                _bmiCategory = 'Overweight';
+                                _bmiCategory = 'Kelebihan';
                               } else {
                                 _bmiCategory = 'Obesitas';
                               }
 
-                              // Reset loading state
                               widget.isLoading = false;
                             });
                           }
